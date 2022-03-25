@@ -18,6 +18,7 @@ export default function ModalWindowForEdit({
   let [imageUrl, setImageUrl] = useState(product.imageUrl);
   let [comments, setComments] = useState(product.comments);
 
+  console.log(comments);
   // F. CHANGE NAME
   const onChangeItemName = (e) => {
     setName(e.target.value);
@@ -132,7 +133,7 @@ export default function ModalWindowForEdit({
             />
             {/* COMMENTS */}
             <label htmlFor="comments">Комментарий</label>
-            <textarea
+            <span
               id="comments"
               cols="30"
               rows="10"
@@ -140,7 +141,8 @@ export default function ModalWindowForEdit({
               onClick={onChangeComment}
             >
               {comments}
-            </textarea>
+            </span>
+
             {/* BUTTONS CONFIRM/CANCEL UPDATING */}
             <div className={s.modal__block_buttons}>
               <button onClick={onUpdateProduct}>Подтвердить</button>
