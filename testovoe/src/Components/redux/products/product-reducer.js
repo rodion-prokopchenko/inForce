@@ -1,15 +1,12 @@
 import { createSlice, createReducer } from "@reduxjs/toolkit";
 
 import productOperations from "./product-actions";
+import JsonItems from "../../../db.json";
 
 const initialState = {
-  products: [],
+  products: JsonItems.products,
   isFetching: "done",
 };
-
-// export const filter = createReducer("", {
-//   [contactOperations.changeFilter]: (_, action) => action.payload,
-// });
 
 const productReducer = createSlice({
   name: "products",
@@ -20,7 +17,7 @@ const productReducer = createSlice({
       state.isFetching = "done";
     },
     [productOperations.deleteProduct](state, action) {
-      state.products = action.payload;
+      state.products = state.products.filter((i) => i.id !== action.payload);
       state.isFetching = "done";
     },
   },

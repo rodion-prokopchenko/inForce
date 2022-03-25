@@ -7,7 +7,7 @@
 "width": 200,
 "height": 200
 },
-"weight": "200g",
+"weight": "200",
 "comments": ["CommentModel", "CommentModel"]
 },
 {
@@ -19,7 +19,7 @@
 "width": 200,
 "height": 200
 },
-"weight": "200g",
+"weight": "100",
 "comments": ["CommentModel", "CommentModel"]
 },
 {
@@ -31,7 +31,7 @@
 "width": 200,
 "height": 200
 },
-"weight": "200g",
+"weight": "300",
 "comments": ["CommentModel", "CommentModel"]
 },
 {
@@ -43,6 +43,6 @@
 "width": 200,
 "height": 200
 },
-"weight": "200g",
+"weight": "400",
 "comments": ["CommentModel", "CommentModel"]
 }]}

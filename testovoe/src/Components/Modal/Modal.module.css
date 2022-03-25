@@ -11,6 +11,14 @@
 .modal h2 {
   margin-top: 0;
 }
+.modal select {
+  margin-top: 0;
+}
+.modal textarea {
+  width: 300px;
+  height: 120px;
+}
+
 .modal .close {
   position: absolute;
   width: 20px;

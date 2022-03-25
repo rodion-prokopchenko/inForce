@@ -3,46 +3,63 @@ import { useDispatch, useSelector } from "react-redux";
 import JsonItems from "../../db.json";
 import { useState } from "react";
 import ProductItem from "../ProductPageItem/ProductPageItem";
-import ModalWindow from "../Modal/Modal";
+import ModalWindowAdding from "../Modal/ModalForAdding";
+import ModalWindowEdit from "../Modal/ModalForEdit";
 
 export default function ProductPage() {
-  const [items, setItems] = useState(JsonItems.products);
-  const [currentItem, setCurrentItem] = useState(null);
-  const [showModal, setShowModal] = useState(true);
-
   const products = useSelector(productSelectors.getProducts);
 
-  const toggleModal = (id) => {
+  const [items, setItems] = useState(JsonItems.products);
+
+  const [currentItem, setCurrentItem] = useState(null);
+
+  const [showModalForEdit, setShowModalForEdit] = useState(false);
+  const [showModalForAdding, setShowModalForAdding] = useState(false);
+
+  //F. TOGGLE ADDING MODAL
+  const toggleModalForAdding = () => {
+    setShowModalForAdding(!showModalForAdding);
+  };
+
+  //F. TOGGLE EDIT MODAL + SET CURRENT ITEM FOR MODAL
+  const toggleModalForEdit = (id) => {
     setCurrentItem(items.filter((item) => item.id === id)[0]);
-    setShowModal(!showModal);
+    setShowModalForEdit(!showModalForEdit);
   };
-  const toggleModalForKey = () => {
-    setShowModal(!showModal);
-  };
+
   return (
     <>
       <div>
+        <button onClick={toggleModalForAdding}>ДОБАВИТЬ</button>
         <ul>
+          {/* ITEMS FROM DB.JSON */}
           {items.map((i) => (
             <>
               <ProductItem
-                onClick={toggleModal}
+                onClick={toggleModalForEdit}
                 key={i.name}
                 name={i.name}
                 img={i.imageUrl}
                 sizeW={i.size.width}
                 sizeH={i.size.height}
+                id={i.id}
               />
-              <button>ДОБАВИТЬ</button>
             </>
           ))}
         </ul>
       </div>
-      {showModal && (
-        <ModalWindow
+      {showModalForAdding && (
+        <ModalWindowAdding
+          products={items}
+          onClose={toggleModalForAdding}
+          onCloseForKey={toggleModalForAdding}
+        />
+      )}
+      {showModalForEdit && (
+        <ModalWindowEdit
           product={currentItem}
-          onClose={toggleModal}
-          onCloseForKey={toggleModalForKey}
+          onClose={toggleModalForEdit}
+          onCloseForKey={toggleModalForEdit}
         />
       )}
     </>
