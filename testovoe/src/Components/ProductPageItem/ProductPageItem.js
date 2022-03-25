@@ -42,7 +42,7 @@ export default function ProductItem({
 
   return (
     <>
-      <li id={id} className={s.productsItem}>
+      <li id={id} className={s.productsItem} key={id}>
         <img src={img} alt={name} width={sizeW} height={sizeH} />
         {/* NAME + COUNT*/}
         <h3>{name}</h3>
