@@ -1,9 +1,25 @@
 import axios from "axios";
-import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-axios.defaults.baseURL = "https://http://localhost:3001/products/";
+// BASE URL
+axios.defaults.baseURL = "http://localhost:3001/";
 
-// ADD PRODUCT
+// GET PRODUCTS
+const getProduct = createAsyncThunk(
+  "product/getProduct",
+  async (credentials) => {
+    try {
+      const { data } = await axios.get("/products", credentials);
+
+      console.log(data);
+      return data;
+    } catch (error) {
+      return console.log(error.message);
+    }
+  }
+);
+
+// ADD CONTACT
 const addProduct = createAsyncThunk(
   "product/addProduct",
   async (credentials) => {
@@ -16,8 +32,39 @@ const addProduct = createAsyncThunk(
     }
   }
 );
+// DELETE CONTACT
+const deleteProduct = createAsyncThunk(
+  "product/deleteProduct",
+  async (credentials) => {
+    try {
+      const { data } = await axios.delete(
+        `/products/${credentials}`,
+        credentials
+      );
 
-const contactOperations = {
+      return data;
+    } catch (error) {
+      return console.log(error.message);
+    }
+  }
+);
+// UPDATE CONTACT
+const updateProduct = createAsyncThunk(
+  "product/updateProduct",
+  async ({ id, updatedContact }) => {
+    try {
+      const { data } = await axios.patch(`products/${id}`, updatedContact);
+
+      return data;
+    } catch (error) {
+      return console.error(error);
+    }
+  }
+);
+const productAction = {
   addProduct,
+  getProduct,
+  deleteProduct,
+  updateProduct,
 };
-export default contactOperations;
+export default productAction;

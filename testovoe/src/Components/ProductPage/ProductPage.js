@@ -1,15 +1,26 @@
 import productSelectors from "../redux/products/product-selector";
+import productAction from "../redux/products/product-actions";
+
 import { useDispatch, useSelector } from "react-redux";
-import JsonItems from "../../db.json";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import ProductItem from "../ProductPageItem/ProductPageItem";
+
 import ModalWindowAdding from "../Modal/ModalForAdding";
 import ModalWindowEdit from "../Modal/ModalForEdit";
 
 export default function ProductPage() {
+  const dispatch = useDispatch();
   const products = useSelector(productSelectors.getProducts);
 
-  const [items, setItems] = useState(JsonItems.products);
+  const [items, setItems] = useState("");
+  const [a, setA] = useState(true);
+
+  useEffect(() => {
+    dispatch(productAction.getProduct());
+    console.log("items: ", items);
+    setItems(products);
+  }, [dispatch, a]);
 
   const [currentItem, setCurrentItem] = useState(null);
 
@@ -17,7 +28,7 @@ export default function ProductPage() {
   const [showModalForAdding, setShowModalForAdding] = useState(false);
 
   //F. TOGGLE ADDING MODAL
-  const toggleModalForAdding = () => {
+  const toggleModalForAdding = (e) => {
     setShowModalForAdding(!showModalForAdding);
   };
 
@@ -29,28 +40,36 @@ export default function ProductPage() {
 
   return (
     <>
+      <button
+        onClick={() => {
+          setA(!a);
+        }}
+      >
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+      </button>
       <div>
         <button onClick={toggleModalForAdding}>ДОБАВИТЬ</button>
         <ul>
           {/* ITEMS FROM DB.JSON */}
-          {items.map((i) => (
-            <>
-              <ProductItem
-                onClick={toggleModalForEdit}
-                key={i.name}
-                name={i.name}
-                img={i.imageUrl}
-                sizeW={i.size.width}
-                sizeH={i.size.height}
-                id={i.id}
-              />
-            </>
-          ))}
+          {items
+            ? items.map((i) => (
+                <>
+                  <ProductItem
+                    toggleModalForEdit={toggleModalForEdit}
+                    key={i.name}
+                    name={i.name}
+                    img={i.imageUrl}
+                    sizeW="200"
+                    sizeH="200"
+                    id={i.id}
+                  />
+                </>
+              ))
+            : null}
         </ul>
       </div>
       {showModalForAdding && (
         <ModalWindowAdding
-          products={items}
           onClose={toggleModalForAdding}
           onCloseForKey={toggleModalForAdding}
         />

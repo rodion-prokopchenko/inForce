@@ -15,10 +15,15 @@
   margin-top: 0;
 }
 .modal textarea {
-  width: 300px;
+  width: 280px;
   height: 120px;
+  resize: none;
 }
-
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .modal .close {
   position: absolute;
   width: 20px;

@@ -1,29 +1,46 @@
 import { useEffect, useState } from "react";
 import s from "./Modal.module.css";
 
+import productAction from "../redux/products/product-actions";
+import { useDispatch } from "react-redux";
+
 export default function ModalWindowForEdit({
   onClose,
   product,
   onCloseForKey,
 }) {
-  let [count, setCount] = useState(1);
+  const dispatch = useDispatch();
 
-  let [weight, setWeight] = useState(product.weight * count);
+  let [name, setName] = useState(product.name);
+  let [count, setCount] = useState(product.count);
+  let [weight, setWeight] = useState(product.weight);
+  let [fullWeigth, setFullWeight] = useState(weight * count);
+  let [imageUrl, setImageUrl] = useState(product.imageUrl);
+  let [comments, setComments] = useState(product.comments);
 
-  // F. CHANGE COUNT OF ITEM
+  // F. CHANGE NAME
+  const onChangeItemName = (e) => {
+    setName(e.target.value);
+  };
+
+  // F. CHANGE COUNT
   const onChangeCounter = (e) => {
-    switch (e.target.name) {
-      case "increment":
-        return setCount((count += 1));
-      case "decrement":
-        if (count === 1) {
-          return;
-        }
-        return setCount((count -= 1));
+    return setCount(e.target.value);
+  };
 
-      default:
-        return;
-    }
+  // F. CHANGE WEIGHT
+  const onChangeWeight = (e) => {
+    setWeight(e.target.value);
+  };
+
+  // F. CHANGE IMAGE URL
+  const onChangeImageURL = (e) => {
+    setImageUrl(e.target.value);
+  };
+
+  // F. CHANGE COMMENTS TO ORDER
+  const onChangeComment = (e) => {
+    setComments(e.target.value);
   };
 
   // F. CLOSE MODAL
@@ -39,39 +56,98 @@ export default function ModalWindowForEdit({
     }
   };
 
+  // F. UPDATE PRODUCT
+  function onUpdateProduct() {
+    const updatedContact = {
+      name: name,
+      count: count,
+      weight: weight,
+      imageUrl: imageUrl,
+      comment: comments,
+    };
+    const id = product.id;
+
+    try {
+      dispatch(productAction.updateProduct({ id, updatedContact }));
+    } catch (error) {
+      alert("Что-то пошло не так при обновлении");
+    }
+  }
+
   // REMOVE ADDEVENTLISTENERS + CHANGE WEIGHT PER COUNT
   useEffect(() => {
     // CHANGE WEIGHT PER COUNT
-    setWeight(product.weight * count);
+    console.log(weight, count, name);
+    setFullWeight(weight * count);
 
     // REMOVE ADDEVENTLISTENERS
     window.addEventListener("keydown", handleKeydown);
     return () => {
       window.removeEventListener("keydown", handleKeydown);
     };
-  });
+  }, [name, count, weight]);
 
   return (
     <>
       <div onClick={handleBackdropClick} className={s.overlay}>
         <div className={s.modal}>
+          {/* IMAGE URL + PICTURE OF IMAGE URL */}
+          <label htmlFor="imageUrl">URL-ссылка картинки продукта</label>
+          <input
+            type="text"
+            id="imageUrl"
+            defaultValue={imageUrl}
+            onClick={onChangeImageURL}
+          />
           <img
             src={product.imageUrl}
             alt={product.name}
-            width={product.size.width}
-            height={product.size.height}
+            width="200"
+            height="200"
           />
-          <h2>{product.name}</h2>
+          {/* NAME */}
+          <h2>{name}</h2>
 
-          <div onClick={onChangeCounter}>
-            <p>
-              <span>Кол-во {count}</span>
-              <span>Вес {weight}</span>
-            </p>
-            <button name="decrement">-</button>
-            <button name="increment">+</button>
-          </div>
-          <button>Подтвердить</button>
+          <label htmlFor="name">Название продукта</label>
+          <input
+            id="name"
+            type="text"
+            defaultValue={product.name}
+            onClick={onChangeItemName}
+          />
+
+          {/* COUNTER */}
+          <label htmlFor="count">Кол-во</label>
+          <input
+            type="text"
+            id="count"
+            defaultValue={count}
+            onClick={onChangeCounter}
+          />
+
+          {/* WEIGHT */}
+          <label htmlFor="weight">Вес</label>
+          <input
+            type="text"
+            id="weight"
+            defaultValue={fullWeigth}
+            onClick={onChangeWeight}
+          />
+
+          {/* COMMENTS */}
+          <label htmlFor="comments">Комментарий</label>
+          <textarea
+            id="comments"
+            cols="30"
+            rows="10"
+            defaultValue={comments}
+            onClick={onChangeComment}
+          >
+            {comments}
+          </textarea>
+
+          {/* BUTTONS CONFIRM/CANCEL UPDATING */}
+          <button onClick={onUpdateProduct}>Подтвердить</button>
           <button onClick={onClose}>Отмена</button>
         </div>
       </div>
