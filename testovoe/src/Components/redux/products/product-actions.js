@@ -1,17 +1,21 @@
 import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
 
 // BASE URL
 axios.defaults.baseURL = "http://localhost:3001/";
 
+// CHANGE SORT ORDER
+const changeSortOrder = createAction("products/changeSort");
+
 // GET PRODUCTS
-const getProduct = createAsyncThunk(
+const getProducts = createAsyncThunk(
   "product/getProduct",
   async (credentials) => {
     try {
-      const { data } = await axios.get("/products", credentials);
+      const { data } = await axios.get(
+        `/products?_sort=name,count&_order=${credentials}`
+      );
 
-      console.log(data);
       return data;
     } catch (error) {
       return console.log(error.message);
@@ -63,8 +67,10 @@ const updateProduct = createAsyncThunk(
 );
 const productAction = {
   addProduct,
-  getProduct,
+  getProducts,
   deleteProduct,
   updateProduct,
+  changeSortOrder,
 };
+
 export default productAction;

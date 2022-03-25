@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
 import s from "./Modal.module.css";
-import productSelectors from "../redux/products/product-selector";
 
 import productAction from "../redux/products/product-actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function ModalWindowForEdit({ onClose, onCloseForKey }) {
-  const products = useSelector(productSelectors.getProducts);
-
   const dispatch = useDispatch();
-  let [name, setName] = useState("");
-  let [count, setCount] = useState("");
-  let [weight, setWeight] = useState("");
-  let [imageUrl, setImageUrl] = useState("");
-
-  let [comments, setComments] = useState("");
+  const [name, setName] = useState("");
+  const [count, setCount] = useState("");
+  const [weight, setWeight] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [comments, setComments] = useState("");
 
   // F. CHANGE NAME
   const onChangeItemName = (e) => {
@@ -50,19 +46,6 @@ export default function ModalWindowForEdit({ onClose, onCloseForKey }) {
     setComments("");
   };
 
-  // F. FINISH OF ADDING PRODUCT
-  const finishAdding = (e) => {
-    console.log(e.target.name);
-    switch (e.target.name) {
-      case "close":
-        return;
-      case "add":
-        return;
-      default:
-        return;
-    }
-  };
-
   // F. ADD NEW PRODUCT
   const addNewProduct = (e) => {
     e.preventDefault();
@@ -70,14 +53,11 @@ export default function ModalWindowForEdit({ onClose, onCloseForKey }) {
       alert("Введите данные");
       return;
     }
-    if (name === "name") {
+    if (name === "") {
       return alert("Введите имя продукта");
     }
     if (count === "") {
       return alert("Введите приблизительное кол-во ");
-    }
-    if (weight === "") {
-      return alert("Введите приблизительный вес");
     }
     if (imageUrl === "") {
       return alert("Введите URL-ссылку картинки вашего продукта");
@@ -93,12 +73,12 @@ export default function ModalWindowForEdit({ onClose, onCloseForKey }) {
 
     try {
       dispatch(productAction.addProduct(newProduct));
-      alert("все гуд");
     } catch {
-      alert("не гуд");
+      console.log("что-то пошло не так ");
     }
 
     reset();
+    onClose();
   };
 
   // F. CLOSE MODAL
@@ -115,11 +95,6 @@ export default function ModalWindowForEdit({ onClose, onCloseForKey }) {
   };
 
   useEffect(() => {
-    console.log("name: ", name);
-    console.log("count: ", count);
-    console.log("weight: ", weight);
-    console.log("comments: ", comments);
-
     window.addEventListener("keydown", handleKeydown);
 
     return () => {
@@ -138,7 +113,6 @@ export default function ModalWindowForEdit({ onClose, onCloseForKey }) {
               id="nameInput"
               type="text"
               name="name"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               onInput={onChangeItemName}
             ></input>
 
@@ -147,16 +121,14 @@ export default function ModalWindowForEdit({ onClose, onCloseForKey }) {
               id="countInput"
               type="text"
               name="count"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               onInput={onChangeCounter}
             ></input>
 
-            <label htmlFor={"weightInput"}>Вес </label>
+            <label htmlFor={"weightInput"}>Вес (необязательно) </label>
             <input
               id="weightInput"
               type="text"
               name="weight"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               onInput={onChangeWeight}
             ></input>
             <label htmlFor={"imageUrlInput"}>
@@ -166,14 +138,14 @@ export default function ModalWindowForEdit({ onClose, onCloseForKey }) {
               id="imageUrlInput"
               type="text"
               name="weight"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               onInput={onChangeImageURL}
             ></input>
-            <textarea onInput={onChangeComment}></textarea>
+            <label htmlFor={"commentArea"}>Комментарий(необязательно)</label>
+            <textarea onInput={onChangeComment} id="commentArea"></textarea>
             <button type="submit" name="comments" onClick={addNewProduct}>
               Подтвердить
             </button>
-            <button type="submit" name="comments">
+            <button type="submit" name="comments" onClick={() => onClose()}>
               Отмена
             </button>
           </form>
@@ -181,27 +153,4 @@ export default function ModalWindowForEdit({ onClose, onCloseForKey }) {
       </div>
     </>
   );
-}
-{
-  /* <div>
-            <p>
-              <span>Кол-во {count}</span>
-              <span>Вес {countedWeight}</span>
-            </p>
-            <button name="decrement" onClick={onChangeCounter}>
-              -
-            </button>
-            <button name="increment" onClick={onChangeCounter}>
-              +
-            </button>
-          </div>
-          <textarea onInput={onChangeComment} className={s.textArea}></textarea>
-          <div>
-            <button name="s" onClick={finishAdding}>
-              Добавить
-            </button>
-            <button name="close" onClick={finishAdding}>
-              Отмена
-            </button>
-          </div> */
 }

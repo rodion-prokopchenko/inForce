@@ -6,12 +6,14 @@ export default function ModalForConfirmDelete({ confirmDeleting }) {
       <div className={s.overlay}>
         <div className={s.modal}>
           <h3>Действительно хотите удалить</h3>
-          <button id="confirmDeleting" onClick={confirmDeleting}>
-            Да
-          </button>
-          <button id="cancelDeleting" onClick={confirmDeleting}>
-            Отмена
-          </button>
+          <div className={s.modal__buttonsBlock}>
+            <button id="confirmDeleting" onClick={confirmDeleting}>
+              Да
+            </button>
+            <button id="cancelDeleting" onClick={confirmDeleting}>
+              Отмена
+            </button>
+          </div>
         </div>
       </div>
     </>

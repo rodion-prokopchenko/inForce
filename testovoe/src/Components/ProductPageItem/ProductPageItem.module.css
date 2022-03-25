@@ -1,0 +1,10 @@
+.productsItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 1px solid black;
+}
+.productsItem__button {
+  margin-top: 10px;
+}

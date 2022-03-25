@@ -1,6 +1,9 @@
 import { useDispatch } from "react-redux";
-import productAction from "../redux/products/product-actions";
 import { useState } from "react";
+
+import s from "./ProductPageItem.module.css";
+
+import productAction from "../redux/products/product-actions";
 
 import ModalForConfirmDelete from "../Modal/ModalForConfirmDelete";
 
@@ -8,6 +11,7 @@ export default function ProductItem({
   toggleModalForEdit,
   name,
   img,
+  count,
   sizeW,
   sizeH,
   id,
@@ -23,11 +27,14 @@ export default function ProductItem({
     switch (e.target.id) {
       case "delete":
         return setShowModalForConfirmDelete(!showModalForConfirmDelete);
+
       case "confirmDeleting":
         dispatch(productAction.deleteProduct(id));
         return setShowModalForConfirmDelete(!showModalForConfirmDelete);
+
       case "cancelDeleting":
         return setShowModalForConfirmDelete(!showModalForConfirmDelete);
+
       default:
         return;
     }
@@ -35,14 +42,21 @@ export default function ProductItem({
 
   return (
     <>
-      <li id={id}>
+      <li id={id} className={s.productsItem}>
         <img src={img} alt={name} width={sizeW} height={sizeH} />
-        {name}
+        {/* NAME + COUNT*/}
+        <h3>{name}</h3>
+        <h4>Кол-во: {count}</h4>
+
         {/* EDIT BUTTON */}
         <button onClick={() => toggleModalForEdit(id)}>РЕДАКТИРОВАТЬ</button>
 
         {/* DELETE BUTTON */}
-        <button id="delete" onClick={onDeleteProduct}>
+        <button
+          id="delete"
+          onClick={onDeleteProduct}
+          className={s.productsItem__button}
+        >
           УДАЛИТЬ
         </button>
       </li>

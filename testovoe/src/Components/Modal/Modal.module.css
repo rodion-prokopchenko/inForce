@@ -1,22 +1,36 @@
 .modal {
   margin: 100px auto;
+  position: relative;
+
+  text-align: center;
   padding: 20px;
   background: #fff;
   border: 1px solid #666;
   width: 300px;
   border-radius: 6px;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-  position: relative;
 }
-.modal h2 {
-  margin-top: 0;
-}
+
 .modal select {
   margin-top: 0;
 }
+.modal input {
+  text-align: center;
+}
+.modal img {
+  border: 1px solid black;
+}
+
+.modal label:not(:first-child) {
+  margin-top: 10px;
+}
 .modal textarea {
+  margin-top: 15px;
+  margin-bottom: 15px;
+
   width: 280px;
   height: 120px;
+
   resize: none;
 }
 .modal__form {
@@ -24,6 +38,19 @@
   flex-direction: column;
   align-items: center;
 }
+.modal__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal__buttonsBlock {
+  display: flex;
+  margin-top: 10px;
+
+  justify-content: space-evenly;
+}
+
 .modal .close {
   position: absolute;
   width: 20px;

@@ -77,7 +77,7 @@ export default function ModalWindowForEdit({
   // REMOVE ADDEVENTLISTENERS + CHANGE WEIGHT PER COUNT
   useEffect(() => {
     // CHANGE WEIGHT PER COUNT
-    console.log(weight, count, name);
+    setName(name);
     setFullWeight(weight * count);
 
     // REMOVE ADDEVENTLISTENERS
@@ -91,64 +91,62 @@ export default function ModalWindowForEdit({
     <>
       <div onClick={handleBackdropClick} className={s.overlay}>
         <div className={s.modal}>
-          {/* IMAGE URL + PICTURE OF IMAGE URL */}
-          <label htmlFor="imageUrl">URL-ссылка картинки продукта</label>
-          <input
-            type="text"
-            id="imageUrl"
-            defaultValue={imageUrl}
-            onClick={onChangeImageURL}
-          />
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            width="200"
-            height="200"
-          />
-          {/* NAME */}
-          <h2>{name}</h2>
-
-          <label htmlFor="name">Название продукта</label>
-          <input
-            id="name"
-            type="text"
-            defaultValue={product.name}
-            onClick={onChangeItemName}
-          />
-
-          {/* COUNTER */}
-          <label htmlFor="count">Кол-во</label>
-          <input
-            type="text"
-            id="count"
-            defaultValue={count}
-            onClick={onChangeCounter}
-          />
-
-          {/* WEIGHT */}
-          <label htmlFor="weight">Вес</label>
-          <input
-            type="text"
-            id="weight"
-            defaultValue={fullWeigth}
-            onClick={onChangeWeight}
-          />
-
-          {/* COMMENTS */}
-          <label htmlFor="comments">Комментарий</label>
-          <textarea
-            id="comments"
-            cols="30"
-            rows="10"
-            defaultValue={comments}
-            onClick={onChangeComment}
-          >
-            {comments}
-          </textarea>
-
-          {/* BUTTONS CONFIRM/CANCEL UPDATING */}
-          <button onClick={onUpdateProduct}>Подтвердить</button>
-          <button onClick={onClose}>Отмена</button>
+          <div className={s.modal__block}>
+            {/* IMAGE URL + PICTURE OF IMAGE URL */}
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              width="200"
+              height="200"
+            />
+            <label htmlFor="imageUrl">URL-ссылка картинки продукта</label>
+            <input
+              type="text"
+              id="imageUrl"
+              defaultValue={imageUrl}
+              onClick={onChangeImageURL}
+            />
+            {/* NAME */}
+            <label htmlFor="name">Название продукта</label>
+            <input
+              id="name"
+              type="text"
+              defaultValue={product.name}
+              onClick={onChangeItemName}
+            />
+            {/* COUNTER */}
+            <label htmlFor="count">Кол-во</label>
+            <input
+              type="text"
+              id="count"
+              defaultValue={count}
+              onClick={onChangeCounter}
+            />
+            {/* WEIGHT */}
+            <label htmlFor="weight">Вес</label>
+            <input
+              type="text"
+              id="weight"
+              defaultValue={fullWeigth}
+              onClick={onChangeWeight}
+            />
+            {/* COMMENTS */}
+            <label htmlFor="comments">Комментарий</label>
+            <textarea
+              id="comments"
+              cols="30"
+              rows="10"
+              defaultValue={comments}
+              onClick={onChangeComment}
+            >
+              {comments}
+            </textarea>
+            {/* BUTTONS CONFIRM/CANCEL UPDATING */}
+            <div className={s.modal__block_buttons}>
+              <button onClick={onUpdateProduct}>Подтвердить</button>
+              <button onClick={onClose}>Отмена</button>
+            </div>
+          </div>
         </div>
       </div>
     </>
