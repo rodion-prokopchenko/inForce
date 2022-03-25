@@ -1,0 +1,48 @@
+{"products": [{
+"id": 1,
+"imageUrl": "https://static9.depositphotos.com/1370358/1171/i/600/depositphotos_11710777-stock-photo-young-potatoes.jpg",
+"name": "Kartoha",
+"count": 4,
+"size": {
+"width": 200,
+"height": 200
+},
+"weight": "200g",
+"comments": ["CommentModel", "CommentModel"]
+},
+{
+"id": 2,
+"imageUrl": "some url here",
+"name": "Markovka",
+"count": 4,
+"size": {
+"width": 200,
+"height": 200
+},
+"weight": "200g",
+"comments": ["CommentModel", "CommentModel"]
+},
+{
+"id": 3,
+"imageUrl": "some url here",
+"name": "Tsybyl'ka",
+"count": 4,
+"size": {
+"width": 200,
+"height": 200
+},
+"weight": "200g",
+"comments": ["CommentModel", "CommentModel"]
+},
+{
+"id": 4,
+"imageUrl": "some url here",
+"name": "Apple",
+"count": 4,
+"size": {
+"width": 200,
+"height": 200
+},
+"weight": "200g",
+"comments": ["CommentModel", "CommentModel"]
+}]}
